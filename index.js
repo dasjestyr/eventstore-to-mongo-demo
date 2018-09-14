@@ -2,7 +2,7 @@ const esClient = require('node-eventstore-client')
 const mongoose = require('mongoose')
 const TestEvent = require('./TestEvent')
 
-mongoose.connect('mongodb://localhost/esTest')
+mongoose.connect('mongodb://localhost/esTest', {autoIndex: false})
 mongoose.connection.once('open', () => {
     console.log('connected to mongo!')
 })
