@@ -29,6 +29,8 @@ const eventAppeared = async (stream, event) => {
             b: e.b
         }
         await TestEvent.updateOne(query, data2, {upsert: true})
+
+        // TODO: we would want to include the projection version and then insert only if greater than
     }    
 }
 
@@ -44,5 +46,12 @@ esConnection.once('connected', (endpoint) => {
         () => console.log("Catchup complete. Monitoring for new events!"),
         (sub, reason, err) => console.log(`Subscription dropped: ${err}`),
          creds)        
+
+    esConnection.subscribeToAllFrom(
+        null, true, eventAppeared,
+        () => console.log("Catchup complete. Monitoring for new events!"),
+        (sub, reason, err) => console.log(`Subscription dropped: ${err}`),
+        creds)        
 });
+
 
