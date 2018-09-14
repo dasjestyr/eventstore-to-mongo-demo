@@ -26,11 +26,15 @@ const eventAppeared = async (stream, event) => {
         var data2 = {
             clientId: id,
             a: e.a,
-            b: e.b
+            b: e.b,
+            c: 'foo'
         }
         await TestEvent.updateOne(query, data2, {upsert: true})
 
         // TODO: we would want to include the projection version and then insert only if greater than
+        // NOTE: It appears that anything not defined in the schema will not be sent to the database
+        // see if there's a setting to get around that otherwise, we're stuck having to model the whole
+        // thing again :(
     }    
 }
 
